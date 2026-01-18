@@ -32,11 +32,18 @@ if uploaded_file is None:
 df = pd.read_csv(uploaded_file, delimiter=";")
 st.success("Dataset carregado com sucesso!")
 
-st.dataframe(df.head())
+# Visualização inicial
+st.header("Visualização dos dados")
 
+num_linhas = st.slider(
+    "Quantidade de linhas para visualizar",
+    min_value=5,
+    max_value=50,
+    value=10
+)
 
-# Visualização dos dados
-st.header("Visualização dos Dados")
+st.dataframe(df.head(num_linhas))
+
 
 hue_col = st.selectbox("Escolha a coluna para hue (pairplot)", df.columns)
 
@@ -147,13 +154,13 @@ st.write("Informe os valores para gerar uma previsão:")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    v1 = st.number_input("Atributo 1", value=10)
+    v1 = st.number_input("Atributo 1 (outlook)", value=10)
 with col2:
-    v2 = st.number_input("Atributo 2", value=20)
+    v2 = st.number_input("Atributo 2 (temperature)", value=20)
 with col3:
-    v3 = st.number_input("Atributo 3", value=30)
+    v3 = st.number_input("Atributo 3 (humidity)", value=30)
 with col4:
-    v4 = st.number_input("Atributo 4", value=40)
+    v4 = st.number_input("Atributo 4 (windy)", value=40)
 
 if st.button("Prever"):
     novo_cenario = [[v1, v2, v3, v4]]
